@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/base.css' %}">
+    {% block styles %}
+        <link rel="stylesheet" href="{% static 'styles/bootstrap/bootstrap.min.css' %}">
+    {% endblock %}
+    <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
+    <title>{% block title %}TheGospel{% endblock %}</title>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h2 class="site-title"><a href="#">TheGospel</a></h2>
+            <label class="input-wrapper">
+                <input aria-label="Pesquisar" class="bg-gray-10 border-transparent rounded-5 border-solid box-border font-body font-medium text-gray-50 text-16 lg:text-13 sm:text-base h-5 sm:h-4 leading-default pli-1.5 plb-1.5 sm:pli-0.5 sm:plb-0.5 md:pis-3 pie-6 outline-none w-full placeholder-gray-25" name="Search" placeholder="Pesquisar..." value="">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-labelledby="search-icon" class="search-icon">
+                    <title id="search-icon">Pesquisar</title>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M10.5 19a7.5 7.5 0 1 1 5.963-2.95l3.336 3.335a1 1 0 0 1-1.414 1.414l-3.336-3.336A7.467 7.467 0 0 1 10.5 19Zm0-2.031a5.469 5.469 0 1 1 0-10.938 5.469 5.469 0 0 1 0 10.938Z" fill="currentColor"></path>
+                </svg>
+            </label>            
+            {% if user.is_authenticated %}
+                <div class="user-buttons">
+                    <a href="#" class="badge badge-dark" role="button">Logout</a>                       
+                </div>
+            {% else %}
+                <div class="guest-buttons">
+                    {% if '/signup' in request.path %}
+                        <a href='#' class="btn-login" role="button">Login</a>
+                    {% elif '/login' in request.path %}
+                        <a href='{% url "signup" %}' class="badge badge-dark" role="button">Sign Up</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </header>
+
+    <div class="main-content">
+        {% block content %}{% endblock content %}
+    </div>
+</body>
+</html>
